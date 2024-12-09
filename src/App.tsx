@@ -15,9 +15,9 @@ import { TodoInfo } from './types/TodoInfo';
 
 export const App: React.FC = () => {
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
-  const [isLoad, setIsLoad] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [isLoadTodoModal, setIsLoadTodoModal] = useState(false);
+  const [isLoadingTodoModal, setIsLoadingTodoModal] = useState(false);
   const [todoInfo, setTodoInfo] = useState<TodoInfo | null>(null);
   const [filter, setFilter] = useState<string>('all');
   const [query, setQuery] = useState<string>('');
@@ -44,7 +44,7 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     const fetchTodos = async () => {
-      setIsLoad(true);
+      setIsLoading(true);
       try {
         const todosFromServer = (await getTodos()).filter(todo =>
           todo.title.toLowerCase().includes(query.toLowerCase()),
@@ -70,7 +70,7 @@ export const App: React.FC = () => {
             break;
         }
       } finally {
-        setIsLoad(false);
+        setIsLoading(false);
       }
     };
 
@@ -82,8 +82,8 @@ export const App: React.FC = () => {
       return;
     }
 
-    const fetchUsers = async () => {
-      setIsLoadTodoModal(true);
+    const fetchUser = async () => {
+      setIsLoadingTodoModal(true);
       try {
         const selectedTodo = todos.find(todo => todo.id === selectedTodoId);
 
@@ -100,11 +100,11 @@ export const App: React.FC = () => {
           setTodoInfo({ ...selectedTodo, user });
         }
       } finally {
-        setIsLoadTodoModal(false);
+        setIsLoadingTodoModal(false);
       }
     };
 
-    fetchUsers();
+    fetchUser();
   }, [selectedTodoId, todos]);
 
   return (
@@ -125,7 +125,7 @@ export const App: React.FC = () => {
             </div>
 
             <div className="block">
-              {isLoad ? (
+              {isLoading ? (
                 <Loader />
               ) : (
                 <TodoList
@@ -142,7 +142,7 @@ export const App: React.FC = () => {
       {selectedTodoId && (
         <TodoModal
           todoInfo={todoInfo}
-          isLoadTodoModal={isLoadTodoModal}
+          isLoadingTodoModal={isLoadingTodoModal}
           onCloseTodo={handleCloseTodo}
         />
       )}

@@ -4,20 +4,20 @@ import { TodoInfo } from '../../types/TodoInfo';
 
 type TodoModalProps = {
   todoInfo: TodoInfo | null;
-  isLoadTodoModal: boolean;
+  isLoadingTodoModal: boolean;
   onCloseTodo: () => void;
 };
 
-export const TodoModal: React.FC = ({
+export const TodoModal: React.FC<TodoModalProps> = ({
   todoInfo,
-  isLoadTodoModal,
+  isLoadingTodoModal,
   onCloseTodo,
 }: TodoModalProps) => {
   return (
     <div className="modal is-active" data-cy="modal">
       <div className="modal-background" />
 
-      {isLoadTodoModal ? (
+      {isLoadingTodoModal ? (
         <Loader />
       ) : (
         <div className="modal-card">

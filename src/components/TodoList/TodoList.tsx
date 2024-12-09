@@ -7,7 +7,7 @@ type TodoProps = {
   onSelectTodo: (id: number) => void;
 };
 
-export const TodoList: React.FC = ({
+export const TodoList: React.FC<TodoProps> = ({
   todos,
   selectedTodoId,
   onSelectTodo,
